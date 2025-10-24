@@ -23,12 +23,6 @@ public final class ArrayValidator {
         }
     }
 
-    public static void validateIndex(StringArray array, int index) {
-        if (array == null || index < 0 || index >= array.length()) {
-            throw new InvalidArrayException("Invalid index: " + index);
-        }
-    }
-
     public static boolean isValidWordString(String str) {
         return str != null && str.matches(WORD_REGEX);
     }
@@ -54,26 +48,6 @@ public final class ArrayValidator {
 
         if (!hasValidWord) {
             throw new InvalidDataException("Line contains no valid words: " + line);
-        }
-    }
-
-    public static void validateNumberLineFormat(String line) {
-        if (line == null || line.trim().isEmpty()) {
-            throw new InvalidDataException("Line is empty or null");
-        }
-
-        String[] parts = line.split(DELIMITER_REGEX);
-        boolean hasValidNumber = false;
-
-        for (String part : parts) {
-            if (!part.trim().isEmpty() && isValidNumberString(part.trim())) {
-                hasValidNumber = true;
-                break;
-            }
-        }
-
-        if (!hasValidNumber) {
-            throw new InvalidDataException("Line contains no valid numbers: " + line);
         }
     }
 }
