@@ -1,0 +1,28 @@
+package arrayapp.entity;
+
+import java.util.Arrays;
+
+public class IntArray {
+    private final int[] array;
+
+    public IntArray(int[] array) {
+        this.array = array != null ? array.clone() : new int[0];
+    }
+
+    public int[] getArray() {
+        return array.clone();
+    }
+
+    public int length() {
+        return array.length;
+    }
+
+    public boolean isEmpty() {
+        return array.length == 0;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(array);
+    }
+}
