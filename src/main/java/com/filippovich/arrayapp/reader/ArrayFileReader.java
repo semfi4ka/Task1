@@ -1,4 +1,4 @@
-package main.java.com.filippovich.arrayapp.file;
+package main.java.com.filippovich.arrayapp.reader;
 
 import main.java.com.filippovich.arrayapp.entity.StringArray;
 import main.java.com.filippovich.arrayapp.entity.ArrayFactory;
@@ -54,7 +54,7 @@ public class ArrayFileReader {
             logger.error("Error reading file: {} - {}", FILE_PATH, e.getMessage(), e);
             throw new FileReadException("File not found or cannot be read: " + FILE_PATH, e);
         } catch (InvalidDataException e) {
-            throw new InvalidDataException("Invalid data: " + FILE_PATH);
+            throw new InvalidDataException("Invalid data in: " + FILE_PATH);
         }
 
         return arrays;

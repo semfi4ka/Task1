@@ -12,7 +12,7 @@ import main.java.com.filippovich.arrayapp.service.DefaultArrayService;
 import main.java.com.filippovich.arrayapp.service.SortService;
 import main.java.com.filippovich.arrayapp.service.stream.ArrayStreamService;
 import main.java.com.filippovich.arrayapp.service.stream.StreamSortService;
-import main.java.com.filippovich.arrayapp.file.ArrayFileReader;
+import main.java.com.filippovich.arrayapp.reader.ArrayFileReader;
 
 import java.io.File;
 import java.io.FileInputStream;
