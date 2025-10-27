@@ -1,12 +1,12 @@
-package main.arrayapp.file;
+package main.java.com.filippovich.arrayapp.file;
 
-import main.arrayapp.entity.StringArray;
-import main.arrayapp.entity.ArrayFactory;
-import main.arrayapp.util.ArrayConverter;
-import main.arrayapp.validation.ArrayValidator;
-import main.arrayapp.exception.FileReadException;
-import main.arrayapp.exception.InvalidDataException;
-import main.arrayapp.util.LoggerUtil;
+import main.java.com.filippovich.arrayapp.entity.StringArray;
+import main.java.com.filippovich.arrayapp.entity.ArrayFactory;
+import main.java.com.filippovich.arrayapp.util.ArrayConverter;
+import main.java.com.filippovich.arrayapp.validation.ArrayValidator;
+import main.java.com.filippovich.arrayapp.exception.FileReadException;
+import main.java.com.filippovich.arrayapp.exception.InvalidDataException;
+import main.java.com.filippovich.arrayapp.util.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;

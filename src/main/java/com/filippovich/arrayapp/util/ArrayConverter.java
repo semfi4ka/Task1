@@ -1,6 +1,6 @@
-package main.arrayapp.util;
+package main.java.com.filippovich.arrayapp.util;
 
-import main.arrayapp.validation.ArrayValidator;
+import main.java.com.filippovich.arrayapp.validation.ArrayValidator;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

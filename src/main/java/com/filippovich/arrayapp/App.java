@@ -1,17 +1,17 @@
-package main.arrayapp;
+package main.java.com.filippovich.arrayapp;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.config.ConfigurationSource;
 import org.apache.logging.log4j.core.config.Configurator;
-import main.arrayapp.entity.StringArray;
-import main.arrayapp.entity.ArrayFactory;
-import main.arrayapp.service.ArrayService;
-import main.arrayapp.service.DefaultArrayService;
-import main.arrayapp.service.SortService;
-import main.arrayapp.service.stream.ArrayStreamService;
-import main.arrayapp.service.stream.StreamSortService;
-import main.arrayapp.file.ArrayFileReader;
+import main.java.com.filippovich.arrayapp.entity.StringArray;
+import main.java.com.filippovich.arrayapp.entity.ArrayFactory;
+import main.java.com.filippovich.arrayapp.service.ArrayService;
+import main.java.com.filippovich.arrayapp.service.DefaultArrayService;
+import main.java.com.filippovich.arrayapp.service.SortService;
+import main.java.com.filippovich.arrayapp.service.stream.ArrayStreamService;
+import main.java.com.filippovich.arrayapp.service.stream.StreamSortService;
+import main.java.com.filippovich.arrayapp.file.ArrayFileReader;
 
 import java.io.File;
 import java.io.FileInputStream;

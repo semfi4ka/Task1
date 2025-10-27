@@ -1,4 +1,4 @@
-package main.arrayapp.entity;
+package main.java.com.filippovich.arrayapp.entity;
 
 import java.util.Arrays;
 

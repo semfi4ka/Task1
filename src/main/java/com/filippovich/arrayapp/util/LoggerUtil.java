@@ -1,4 +1,4 @@
-package main.arrayapp.util;
+package main.java.com.filippovich.arrayapp.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

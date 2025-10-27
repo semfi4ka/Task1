@@ -1,8 +1,8 @@
-package main.arrayapp.service;
+package main.java.com.filippovich.arrayapp.service;
 
-import main.arrayapp.entity.StringArray;
-import main.arrayapp.entity.ArrayFactory;
-import main.arrayapp.util.LoggerUtil;
+import main.java.com.filippovich.arrayapp.entity.StringArray;
+import main.java.com.filippovich.arrayapp.entity.ArrayFactory;
+import main.java.com.filippovich.arrayapp.util.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 
 public class DefaultArrayService implements ArrayService {

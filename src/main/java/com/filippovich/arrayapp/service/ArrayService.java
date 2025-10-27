@@ -1,6 +1,6 @@
-package main.arrayapp.service;
+package main.java.com.filippovich.arrayapp.service;
 
-import main.arrayapp.entity.StringArray;
+import main.java.com.filippovich.arrayapp.entity.StringArray;
 
 public interface ArrayService {
 

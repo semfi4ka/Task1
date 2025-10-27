@@ -25,7 +25,7 @@
 
     <Loggers>
         <!-- Наше приложение - DEBUG уровень -->
-        <Logger name="main.arrayapp" level="DEBUG" additivity="false">
+        <Logger name="main.java.com.filippovich.arrayapp" level="DEBUG" additivity="false">
             <AppenderRef ref="Console" level="INFO"/>
             <AppenderRef ref="AsyncFile" level="DEBUG"/>
         </Logger>

@@ -1,7 +1,7 @@
-package main.arrayapp.entity;
+package main.java.com.filippovich.arrayapp.entity;
 
-import main.arrayapp.validation.ArrayValidator;
-import main.arrayapp.util.LoggerUtil;
+import main.java.com.filippovich.arrayapp.validation.ArrayValidator;
+import main.java.com.filippovich.arrayapp.util.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;

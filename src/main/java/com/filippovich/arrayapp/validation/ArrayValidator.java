@@ -1,7 +1,7 @@
-package main.arrayapp.validation;
+package main.java.com.filippovich.arrayapp.validation;
 
-import main.arrayapp.exception.InvalidArrayException;
-import main.arrayapp.exception.InvalidDataException;
+import main.java.com.filippovich.arrayapp.exception.InvalidArrayException;
+import main.java.com.filippovich.arrayapp.exception.InvalidDataException;
 
 public final class ArrayValidator {
     private ArrayValidator() {}
