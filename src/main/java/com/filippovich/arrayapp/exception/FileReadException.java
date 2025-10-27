@@ -1,6 +1,6 @@
 package main.java.com.filippovich.arrayapp.exception;
 
-public class FileReadException extends RuntimeException {
+public class FileReadException extends Exception {
     public FileReadException(String message) {
         super(message);
     }

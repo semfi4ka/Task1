@@ -1,5 +1,6 @@
 package main.java.com.filippovich.arrayapp.entity;
 
+import main.java.com.filippovich.arrayapp.exception.InvalidArrayException;
 import main.java.com.filippovich.arrayapp.validation.ArrayValidator;
 import main.java.com.filippovich.arrayapp.util.LoggerUtil;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +14,7 @@ public final class ArrayFactory {
         throw new AssertionError("Utility class should not be instantiated");
     }
 
-    public static StringArray createFromArray(String[] array) {
+    public static StringArray createFromArray(String[] array) throws InvalidArrayException {
         logger.debug("Creating StringArray from array: {}",
                 array != null ? Arrays.toString(array) : "null");
 

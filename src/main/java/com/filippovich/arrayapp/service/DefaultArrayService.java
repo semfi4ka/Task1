@@ -2,6 +2,7 @@ package main.java.com.filippovich.arrayapp.service;
 
 import main.java.com.filippovich.arrayapp.entity.StringArray;
 import main.java.com.filippovich.arrayapp.entity.ArrayFactory;
+import main.java.com.filippovich.arrayapp.exception.InvalidArrayException;
 import main.java.com.filippovich.arrayapp.util.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 
@@ -133,7 +134,7 @@ public class DefaultArrayService implements ArrayService {
     }
 
     @Override
-    public StringArray replaceWords(StringArray array, String oldWord, String newWord) {
+    public StringArray replaceWords(StringArray array, String oldWord, String newWord) throws InvalidArrayException {
         logger.debug("Replacing words in array: {}, oldWord: '{}', newWord: '{}'", array, oldWord, newWord);
 
         String[] arr = array.getArray();
@@ -149,7 +150,7 @@ public class DefaultArrayService implements ArrayService {
     }
 
     @Override
-    public StringArray replaceWordsByLength(StringArray array, int targetLength, String newWord) {
+    public StringArray replaceWordsByLength(StringArray array, int targetLength, String newWord) throws InvalidArrayException {
         logger.debug("Replacing words with length {} with '{}' in array: {}", targetLength, newWord, array);
 
         String[] arr = array.getArray();

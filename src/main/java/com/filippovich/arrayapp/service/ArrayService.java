@@ -1,6 +1,7 @@
 package main.java.com.filippovich.arrayapp.service;
 
 import main.java.com.filippovich.arrayapp.entity.StringArray;
+import main.java.com.filippovich.arrayapp.exception.InvalidArrayException;
 
 public interface ArrayService {
 
@@ -14,8 +15,8 @@ public interface ArrayService {
     int countWordsShorterThan(StringArray array, int maxLength);
     int countWordsWithExactLength(StringArray array, int length);
 
-    StringArray replaceWords(StringArray array, String oldWord, String newWord);
-    StringArray replaceWordsByLength(StringArray array, int targetLength, String newWord);
+    StringArray replaceWords(StringArray array, String oldWord, String newWord) throws InvalidArrayException;
+    StringArray replaceWordsByLength(StringArray array, int targetLength, String newWord) throws InvalidArrayException;
 
     String findFirstAlphabetically(StringArray array);
     String findLastAlphabetically(StringArray array);

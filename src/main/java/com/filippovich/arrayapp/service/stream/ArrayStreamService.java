@@ -2,6 +2,7 @@ package main.java.com.filippovich.arrayapp.service.stream;
 
 import main.java.com.filippovich.arrayapp.entity.StringArray;
 import main.java.com.filippovich.arrayapp.entity.ArrayFactory;
+import main.java.com.filippovich.arrayapp.exception.InvalidArrayException;
 import main.java.com.filippovich.arrayapp.service.ArrayService;
 import main.java.com.filippovich.arrayapp.util.LoggerUtil;
 import org.apache.logging.log4j.Logger;
@@ -98,7 +99,7 @@ public class ArrayStreamService implements ArrayService {
     }
 
     @Override
-    public StringArray replaceWords(StringArray array, String oldWord, String newWord) {
+    public StringArray replaceWords(StringArray array, String oldWord, String newWord) throws InvalidArrayException {
         logger.debug("Replacing words using Stream API in array: {}, '{}' -> '{}'", array, oldWord, newWord);
 
         String[] result = Arrays.stream(array.getArray())
@@ -111,7 +112,7 @@ public class ArrayStreamService implements ArrayService {
     }
 
     @Override
-    public StringArray replaceWordsByLength(StringArray array, int targetLength, String newWord) {
+    public StringArray replaceWordsByLength(StringArray array, int targetLength, String newWord) throws InvalidArrayException {
         logger.debug("Replacing words by length using Stream API in array: {}, length {} -> '{}'",
                 array, targetLength, newWord);
 

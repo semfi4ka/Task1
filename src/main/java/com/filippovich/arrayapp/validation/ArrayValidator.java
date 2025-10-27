@@ -10,13 +10,13 @@ public final class ArrayValidator {
     public static final String NUMBER_REGEX = "-?\\d+";
     public static final String DELIMITER_REGEX = "[,\\s;\\-]+";
 
-    public static void validateArray(String[] array) {
+    public static void validateArray(String[] array) throws InvalidArrayException {
         if (array == null) {
             throw new InvalidArrayException("Array cannot be null");
         }
     }
 
-    public static void validateArray(int[] array) {
+    public static void validateArray(int[] array) throws InvalidArrayException {
         if (array == null) {
             throw new InvalidArrayException("Array cannot be null");
         }
@@ -30,7 +30,7 @@ public final class ArrayValidator {
         return str != null && str.matches(NUMBER_REGEX);
     }
 
-    public static void validateLineFormat(String line) {
+    public static void validateLineFormat(String line) throws InvalidDataException {
         if (line == null || line.trim().isEmpty()) {
             throw new InvalidDataException("Line is empty or null");
         }

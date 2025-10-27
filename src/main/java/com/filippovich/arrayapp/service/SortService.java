@@ -2,6 +2,7 @@ package main.java.com.filippovich.arrayapp.service;
 
 import main.java.com.filippovich.arrayapp.entity.StringArray;
 import main.java.com.filippovich.arrayapp.entity.ArrayFactory;
+import main.java.com.filippovich.arrayapp.exception.InvalidArrayException;
 import main.java.com.filippovich.arrayapp.util.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 
@@ -11,7 +12,7 @@ import java.util.Comparator;
 public class SortService {
     private static final Logger logger = LoggerUtil.getLogger(SortService.class);
 
-    public StringArray sortByLengthBubble(StringArray array) {
+    public StringArray sortByLengthBubble(StringArray array) throws InvalidArrayException {
         logger.debug("Bubble sorting by word length: {}", array);
 
         if (array.isEmpty()) {
@@ -37,7 +38,7 @@ public class SortService {
         return sortedArray;
     }
 
-    public StringArray sortByLengthSelection(StringArray array) {
+    public StringArray sortByLengthSelection(StringArray array) throws InvalidArrayException {
         logger.debug("Selection sorting by word length: {}", array);
 
         if (array.isEmpty()) {
@@ -65,7 +66,7 @@ public class SortService {
         return sortedArray;
     }
 
-    public StringArray sortByLengthQuick(StringArray array) {
+    public StringArray sortByLengthQuick(StringArray array) throws InvalidArrayException {
         logger.debug("Quick sorting by word length: {}", array);
 
         if (array.isEmpty()) {
@@ -111,7 +112,7 @@ public class SortService {
         return i + 1;
     }
 
-    public StringArray sortAlphabetically(StringArray array) {
+    public StringArray sortAlphabetically(StringArray array) throws InvalidArrayException {
         logger.debug("Sorting alphabetically: {}", array);
 
         if (array.isEmpty()) {
@@ -127,7 +128,7 @@ public class SortService {
         return sortedArray;
     }
 
-    public StringArray sortByLengthDescending(StringArray array) {
+    public StringArray sortByLengthDescending(StringArray array) throws InvalidArrayException {
         logger.debug("Sorting by length descending: {}", array);
 
         if (array.isEmpty()) {

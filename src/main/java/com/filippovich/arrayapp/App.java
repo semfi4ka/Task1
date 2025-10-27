@@ -1,5 +1,6 @@
 package main.java.com.filippovich.arrayapp;
 
+import main.java.com.filippovich.arrayapp.exception.InvalidArrayException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.config.ConfigurationSource;
@@ -28,7 +29,7 @@ public class App {
     private static void initializeLogger() {
         try {
             String[] configPaths = {
-                    "src/main/resources/log4j2.xml",
+                    "src/main/java/com/filippovich/resources/log4j2.xml",
                     "src/resources/log4j2.xml",
                     "log4j2.xml"
             };
@@ -64,7 +65,7 @@ public class App {
         }
     }
 
-    private static void runAllTests() {
+    private static void runAllTests() throws InvalidArrayException {
         logger.info("Starting all test suites...");
 
         testStreamOperations();
@@ -97,7 +98,7 @@ public class App {
         }
     }
 
-    private static void processArraysFromFile(java.util.List<StringArray> arrays) {
+    private static void processArraysFromFile(java.util.List<StringArray> arrays) throws InvalidArrayException {
         logger.info("Processing arrays from file - Total arrays: {}", arrays.size());
         ArrayService arrayService = new DefaultArrayService();
         SortService sortService = new SortService();
@@ -126,7 +127,7 @@ public class App {
         }
     }
 
-    private static void testStreamOperations() {
+    private static void testStreamOperations() throws InvalidArrayException {
         logger.info("=== STREAM API OPERATIONS TEST ===");
 
         String[] testData = {"apple", "banana", "cat", "elephant", "dog", "zebra"};
@@ -161,7 +162,7 @@ public class App {
         logger.info("Replace words with length 3: {}", streamService.replaceWordsByLength(array, 3, "***"));
     }
 
-    private static void testStreamSorting() {
+    private static void testStreamSorting() throws InvalidArrayException {
         logger.info("=== STREAM SORTING TEST ===");
 
         String[] testData = {"elephant", "cat", "banana", "ant", "dog", "zebra", "cat"};
@@ -182,7 +183,7 @@ public class App {
         logger.info("Unique alphabetically: {}", Arrays.toString(streamSortService.findUniqueAlphabetically(array)));
     }
 
-    private static void testSortingAlgorithms() {
+    private static void testSortingAlgorithms() throws InvalidArrayException {
         logger.info("=== SORTING ALGORITHMS TEST ===");
 
         String[] testData = {"elephant", "cat", "banana", "ant", "dog", "zebra", "programming"};

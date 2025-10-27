@@ -17,14 +17,14 @@ import java.util.List;
 
 public class ArrayFileReader {
     private static final Logger logger = LoggerUtil.getLogger(ArrayFileReader.class);
-    private static final String FILE_PATH = "src/main/resources/data/words.txt";
+    private static final String FILE_PATH = "src/main/java/com/filippovich/resources/data/words.txt";
     private List<StringArray> cachedArrays;
 
     public ArrayFileReader() {
         this.cachedArrays = null;
     }
 
-    public List<StringArray> readArraysFromFile() {
+    public List<StringArray> readArraysFromFile() throws FileReadException, InvalidDataException {
         if (cachedArrays != null) {
             logger.debug("Returning cached arrays");
             return new ArrayList<>(cachedArrays);
@@ -53,12 +53,14 @@ public class ArrayFileReader {
         } catch (IOException e) {
             logger.error("Error reading file: {} - {}", FILE_PATH, e.getMessage(), e);
             throw new FileReadException("File not found or cannot be read: " + FILE_PATH, e);
+        } catch (InvalidDataException e) {
+            throw new InvalidDataException("Invalid data: " + FILE_PATH);
         }
 
         return arrays;
     }
 
-    private boolean processLine(String line, int lineNumber, List<StringArray> arrays) {
+    private boolean processLine(String line, int lineNumber, List<StringArray> arrays) throws InvalidDataException {
         try {
             if (line == null || line.trim().isEmpty()) {
                 logger.debug("Line {}: Empty line - skipped", lineNumber);
@@ -80,9 +82,6 @@ public class ArrayFileReader {
                 return false;
             }
 
-        } catch (InvalidDataException e) {
-            logger.warn("Line {}: Invalid data - {}", lineNumber, e.getMessage());
-            return false;
         } catch (Exception e) {
             logger.error("Line {}: Unexpected error", lineNumber, e);
             return false;

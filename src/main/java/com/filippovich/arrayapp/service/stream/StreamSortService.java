@@ -2,6 +2,7 @@ package main.java.com.filippovich.arrayapp.service.stream;
 
 import main.java.com.filippovich.arrayapp.entity.StringArray;
 import main.java.com.filippovich.arrayapp.entity.ArrayFactory;
+import main.java.com.filippovich.arrayapp.exception.InvalidArrayException;
 import main.java.com.filippovich.arrayapp.util.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 
@@ -11,7 +12,7 @@ import java.util.Comparator;
 public class StreamSortService {
     private static final Logger logger = LoggerUtil.getLogger(StreamSortService.class);
 
-    public StringArray sortWithStreamSorted(StringArray array) {
+    public StringArray sortWithStreamSorted(StringArray array) throws InvalidArrayException {
         logger.debug("Stream sorting by length: {}", array);
 
         if (array.isEmpty()) {
@@ -28,7 +29,7 @@ public class StreamSortService {
         return result;
     }
 
-    public StringArray sortDescendingWithStream(StringArray array) {
+    public StringArray sortDescendingWithStream(StringArray array) throws InvalidArrayException {
         logger.debug("Stream sorting by length descending: {}", array);
 
         if (array.isEmpty()) {
@@ -45,7 +46,7 @@ public class StreamSortService {
         return result;
     }
 
-    public StringArray sortAlphabeticallyWithStream(StringArray array) {
+    public StringArray sortAlphabeticallyWithStream(StringArray array) throws InvalidArrayException {
         logger.debug("Stream sorting alphabetically: {}", array);
 
         if (array.isEmpty()) {
@@ -62,7 +63,7 @@ public class StreamSortService {
         return result;
     }
 
-    public StringArray sortAlphabeticallyDescendingWithStream(StringArray array) {
+    public StringArray sortAlphabeticallyDescendingWithStream(StringArray array) throws InvalidArrayException {
         logger.debug("Stream sorting alphabetically descending: {}", array);
 
         if (array.isEmpty()) {
@@ -79,7 +80,7 @@ public class StreamSortService {
         return result;
     }
 
-    public StringArray sortParallelStream(StringArray array) {
+    public StringArray sortParallelStream(StringArray array) throws InvalidArrayException {
         logger.debug("Parallel stream sorting by length: {}", array);
 
         if (array.isEmpty()) {
@@ -165,7 +166,7 @@ public class StreamSortService {
         return result;
     }
 
-    public void testAllStreamSorts(StringArray originalArray) {
+    public void testAllStreamSorts(StringArray originalArray) throws InvalidArrayException {
         logger.info("Testing all Stream sorts on: {}", originalArray);
 
         logger.debug("Original: {}", originalArray);
