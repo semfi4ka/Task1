@@ -7,7 +7,6 @@ public final class ArrayValidator {
     private ArrayValidator() {}
 
     public static final String WORD_REGEX = "[a-zA-Zа-яА-Я]+";
-    public static final String NUMBER_REGEX = "-?\\d+";
     public static final String DELIMITER_REGEX = "[,\\s;\\-]+";
 
     public static void validateArray(String[] array) throws InvalidArrayException {
@@ -16,18 +15,8 @@ public final class ArrayValidator {
         }
     }
 
-    public static void validateArray(int[] array) throws InvalidArrayException {
-        if (array == null) {
-            throw new InvalidArrayException("Array cannot be null");
-        }
-    }
-
     public static boolean isValidWordString(String str) {
         return str != null && str.matches(WORD_REGEX);
-    }
-
-    public static boolean isValidNumberString(String str) {
-        return str != null && str.matches(NUMBER_REGEX);
     }
 
     public static void validateLineFormat(String line) throws InvalidDataException {
