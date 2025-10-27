@@ -11,7 +11,6 @@ import java.util.Comparator;
 public class SortService {
     private static final Logger logger = LoggerUtil.getLogger(SortService.class);
 
-    // Сортировка пузырьком по длине слова
     public StringArray sortByLengthBubble(StringArray array) {
         logger.debug("Bubble sorting by word length: {}", array);
 
@@ -26,7 +25,6 @@ public class SortService {
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
                 if (arr[j].length() > arr[j + 1].length()) {
-                    // Меняем слова местами
                     String temp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
@@ -39,7 +37,6 @@ public class SortService {
         return sortedArray;
     }
 
-    // Сортировка выбором по длине слова
     public StringArray sortByLengthSelection(StringArray array) {
         logger.debug("Selection sorting by word length: {}", array);
 
@@ -58,7 +55,6 @@ public class SortService {
                     minIndex = j;
                 }
             }
-            // Меняем найденный минимальный элемент с первым элементом
             String temp = arr[minIndex];
             arr[minIndex] = arr[i];
             arr[i] = temp;
@@ -69,7 +65,6 @@ public class SortService {
         return sortedArray;
     }
 
-    // Быстрая сортировка по длине слова
     public StringArray sortByLengthQuick(StringArray array) {
         logger.debug("Quick sorting by word length: {}", array);
 
@@ -116,7 +111,6 @@ public class SortService {
         return i + 1;
     }
 
-    // Алфавитная сортировка (без учета регистра)
     public StringArray sortAlphabetically(StringArray array) {
         logger.debug("Sorting alphabetically: {}", array);
 
@@ -133,7 +127,6 @@ public class SortService {
         return sortedArray;
     }
 
-    // Сортировка по длине в убывающем порядке
     public StringArray sortByLengthDescending(StringArray array) {
         logger.debug("Sorting by length descending: {}", array);
 

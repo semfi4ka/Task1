@@ -174,8 +174,6 @@ public class ArrayStreamService implements ArrayService {
         return (int) result;
     }
 
-    // Дополнительные Stream API методы
-
     public String[] findWordsLongerThan(StringArray array, int minLength) {
         logger.debug("Finding words longer than {} using Stream API in array: {}", minLength, array);
 
@@ -371,32 +369,27 @@ public class ArrayStreamService implements ArrayService {
         return result;
     }
 
-    // Метод для демонстрации всех Stream операций
     public void demonstrateAllStreamOperations(StringArray array) {
         logger.info("=== DEMONSTRATING ALL STREAM OPERATIONS ===");
         logger.info("Original array: {}", array);
 
-        // Базовые операции
         logger.info("Shortest word: '{}'", findShortestWord(array));
         logger.info("Longest word: '{}'", findLongestWord(array));
         logger.info("Average length: {:.2f}", calculateAverageLength(array));
         logger.info("Total characters: {}", calculateTotalCharacters(array));
 
-        // Расширенные операции
         logger.info("Unique words: {}", Arrays.toString(getUniqueWords(array)));
         logger.info("Sorted by length: {}", Arrays.toString(getWordsSortedByLength(array)));
         logger.info("Sorted alphabetically: {}", Arrays.toString(getWordsSortedAlphabetically(array)));
         logger.info("Words longer than 4: {}", Arrays.toString(findWordsLongerThan(array, 4)));
         logger.info("Words containing 'a': {}", Arrays.toString(findWordsContaining(array, "a")));
 
-        // Статистика
         logger.info("Max word length: {}", findMaxWordLength(array));
         logger.info("Min word length: {}", findMinWordLength(array));
         logger.info("Distinct word lengths: {}", countDistinctWordLengths(array));
         logger.info("Top 2 longest words: {}", Arrays.toString(getTopLongestWords(array, 2)));
         logger.info("Top 2 shortest words: {}", Arrays.toString(getTopShortestWords(array, 2)));
 
-        // Условные проверки
         logger.info("All words uppercase: {}", allWordsMatchCondition(array, "uppercase"));
         logger.info("Any palindrome: {}", anyWordMatchesCondition(array, "palindrome"));
 
