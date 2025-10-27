@@ -1,6 +1,6 @@
-package arrayapp.service;
+package main.arrayapp.service;
 
-import arrayapp.entity.StringArray;
+import main.arrayapp.entity.StringArray;
 
 public interface ArrayService {
 

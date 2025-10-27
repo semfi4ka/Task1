@@ -1,4 +1,4 @@
-package arrayapp.exception;
+package main.arrayapp.exception;
 
 public class InvalidDataException extends RuntimeException {
     public InvalidDataException(String message) {

@@ -1,17 +1,19 @@
-package arrayapp.service;
+package main.arrayapp.service;
 
-import arrayapp.entity.StringArray;
-import arrayapp.entity.ArrayFactory;
-import arrayapp.util.LoggerUtil;
+import main.arrayapp.entity.StringArray;
+import main.arrayapp.entity.ArrayFactory;
+import main.arrayapp.util.LoggerUtil;
+import org.apache.logging.log4j.Logger;
 
 public class DefaultArrayService implements ArrayService {
+    private static final Logger logger = LoggerUtil.getLogger(DefaultArrayService.class);
 
     @Override
     public String findShortestWord(StringArray array) {
-        LoggerUtil.debug(DefaultArrayService.class, "Finding shortest word in array: " + array);
+        logger.debug("Finding shortest word in array: {}", array);
 
         if (array.isEmpty()) {
-            LoggerUtil.warn(DefaultArrayService.class, "Attempt to find shortest word in empty array");
+            logger.warn("Attempt to find shortest word in empty array");
             return "";
         }
 
@@ -23,16 +25,16 @@ public class DefaultArrayService implements ArrayService {
             }
         }
 
-        LoggerUtil.debug(DefaultArrayService.class, "Shortest word found: '" + shortest + "' (length: " + shortest.length() + ")");
+        logger.debug("Shortest word found: '{}' (length: {})", shortest, shortest.length());
         return shortest;
     }
 
     @Override
     public String findLongestWord(StringArray array) {
-        LoggerUtil.debug(DefaultArrayService.class, "Finding longest word in array: " + array);
+        logger.debug("Finding longest word in array: {}", array);
 
         if (array.isEmpty()) {
-            LoggerUtil.warn(DefaultArrayService.class, "Attempt to find longest word in empty array");
+            logger.warn("Attempt to find longest word in empty array");
             return "";
         }
 
@@ -44,16 +46,16 @@ public class DefaultArrayService implements ArrayService {
             }
         }
 
-        LoggerUtil.debug(DefaultArrayService.class, "Longest word found: '" + longest + "' (length: " + longest.length() + ")");
+        logger.debug("Longest word found: '{}' (length: {})", longest, longest.length());
         return longest;
     }
 
     @Override
     public double calculateAverageLength(StringArray array) {
-        LoggerUtil.debug(DefaultArrayService.class, "Calculating average word length in array: " + array);
+        logger.debug("Calculating average word length in array: {}", array);
 
         if (array.isEmpty()) {
-            LoggerUtil.warn(DefaultArrayService.class, "Attempt to calculate average length of empty array");
+            logger.warn("Attempt to calculate average length of empty array");
             return 0.0;
         }
 
@@ -64,13 +66,13 @@ public class DefaultArrayService implements ArrayService {
         }
 
         double average = (double) totalLength / array.length();
-        LoggerUtil.debug(DefaultArrayService.class, "Average word length: " + average);
+        logger.debug("Average word length: {:.2f}", average);
         return average;
     }
 
     @Override
     public int calculateTotalCharacters(StringArray array) {
-        LoggerUtil.debug(DefaultArrayService.class, "Calculating total characters in array: " + array);
+        logger.debug("Calculating total characters in array: {}", array);
 
         String[] arr = array.getArray();
         int total = 0;
@@ -78,14 +80,13 @@ public class DefaultArrayService implements ArrayService {
             total += word.length();
         }
 
-        LoggerUtil.debug(DefaultArrayService.class, "Total characters: " + total);
+        logger.debug("Total characters: {}", total);
         return total;
     }
 
     @Override
     public int countWordsLongerThan(StringArray array, int minLength) {
-        LoggerUtil.debug(DefaultArrayService.class,
-                "Counting words longer than " + minLength + " in array: " + array);
+        logger.debug("Counting words longer than {} in array: {}", minLength, array);
 
         String[] arr = array.getArray();
         int count = 0;
@@ -95,14 +96,13 @@ public class DefaultArrayService implements ArrayService {
             }
         }
 
-        LoggerUtil.debug(DefaultArrayService.class, "Words longer than " + minLength + ": " + count);
+        logger.debug("Words longer than {}: {}", minLength, count);
         return count;
     }
 
     @Override
     public int countWordsShorterThan(StringArray array, int maxLength) {
-        LoggerUtil.debug(DefaultArrayService.class,
-                "Counting words shorter than " + maxLength + " in array: " + array);
+        logger.debug("Counting words shorter than {} in array: {}", maxLength, array);
 
         String[] arr = array.getArray();
         int count = 0;
@@ -112,14 +112,13 @@ public class DefaultArrayService implements ArrayService {
             }
         }
 
-        LoggerUtil.debug(DefaultArrayService.class, "Words shorter than " + maxLength + ": " + count);
+        logger.debug("Words shorter than {}: {}", maxLength, count);
         return count;
     }
 
     @Override
     public int countWordsWithExactLength(StringArray array, int length) {
-        LoggerUtil.debug(DefaultArrayService.class,
-                "Counting words with exact length " + length + " in array: " + array);
+        logger.debug("Counting words with exact length {} in array: {}", length, array);
 
         String[] arr = array.getArray();
         int count = 0;
@@ -129,14 +128,13 @@ public class DefaultArrayService implements ArrayService {
             }
         }
 
-        LoggerUtil.debug(DefaultArrayService.class, "Words with length " + length + ": " + count);
+        logger.debug("Words with length {}: {}", length, count);
         return count;
     }
 
     @Override
     public StringArray replaceWords(StringArray array, String oldWord, String newWord) {
-        LoggerUtil.debug(DefaultArrayService.class,
-                "Replacing words in array: " + array + ", oldWord: '" + oldWord + "', newWord: '" + newWord + "'");
+        logger.debug("Replacing words in array: {}, oldWord: '{}', newWord: '{}'", array, oldWord, newWord);
 
         String[] arr = array.getArray();
         String[] result = new String[arr.length];
@@ -146,14 +144,13 @@ public class DefaultArrayService implements ArrayService {
         }
 
         StringArray replacedArray = ArrayFactory.createFromArray(result);
-        LoggerUtil.debug(DefaultArrayService.class, "Words replaced. Result: " + replacedArray);
+        logger.debug("Words replaced. Result: {}", replacedArray);
         return replacedArray;
     }
 
     @Override
     public StringArray replaceWordsByLength(StringArray array, int targetLength, String newWord) {
-        LoggerUtil.debug(DefaultArrayService.class,
-                "Replacing words with length " + targetLength + " with '" + newWord + "' in array: " + array);
+        logger.debug("Replacing words with length {} with '{}' in array: {}", targetLength, newWord, array);
 
         String[] arr = array.getArray();
         String[] result = new String[arr.length];
@@ -163,15 +160,16 @@ public class DefaultArrayService implements ArrayService {
         }
 
         StringArray replacedArray = ArrayFactory.createFromArray(result);
-        LoggerUtil.debug(DefaultArrayService.class, "Words replaced by length. Result: " + replacedArray);
+        logger.debug("Words replaced by length. Result: {}", replacedArray);
         return replacedArray;
     }
 
     @Override
     public String findFirstAlphabetically(StringArray array) {
-        LoggerUtil.debug(DefaultArrayService.class, "Finding first word alphabetically in array: " + array);
+        logger.debug("Finding first word alphabetically in array: {}", array);
 
         if (array.isEmpty()) {
+            logger.warn("Attempt to find first word in empty array");
             return "";
         }
 
@@ -183,15 +181,16 @@ public class DefaultArrayService implements ArrayService {
             }
         }
 
-        LoggerUtil.debug(DefaultArrayService.class, "First word alphabetically: '" + first + "'");
+        logger.debug("First word alphabetically: '{}'", first);
         return first;
     }
 
     @Override
     public String findLastAlphabetically(StringArray array) {
-        LoggerUtil.debug(DefaultArrayService.class, "Finding last word alphabetically in array: " + array);
+        logger.debug("Finding last word alphabetically in array: {}", array);
 
         if (array.isEmpty()) {
+            logger.warn("Attempt to find last word in empty array");
             return "";
         }
 
@@ -203,14 +202,13 @@ public class DefaultArrayService implements ArrayService {
             }
         }
 
-        LoggerUtil.debug(DefaultArrayService.class, "Last word alphabetically: '" + last + "'");
+        logger.debug("Last word alphabetically: '{}'", last);
         return last;
     }
 
     @Override
     public int countWordsStartingWith(StringArray array, char letter) {
-        LoggerUtil.debug(DefaultArrayService.class,
-                "Counting words starting with '" + letter + "' in array: " + array);
+        logger.debug("Counting words starting with '{}' in array: {}", letter, array);
 
         String[] arr = array.getArray();
         int count = 0;
@@ -220,14 +218,13 @@ public class DefaultArrayService implements ArrayService {
             }
         }
 
-        LoggerUtil.debug(DefaultArrayService.class, "Words starting with '" + letter + "': " + count);
+        logger.debug("Words starting with '{}': {}", letter, count);
         return count;
     }
 
     @Override
     public int countWordsEndingWith(StringArray array, char letter) {
-        LoggerUtil.debug(DefaultArrayService.class,
-                "Counting words ending with '" + letter + "' in array: " + array);
+        logger.debug("Counting words ending with '{}' in array: {}", letter, array);
 
         String[] arr = array.getArray();
         int count = 0;
@@ -238,7 +235,7 @@ public class DefaultArrayService implements ArrayService {
             }
         }
 
-        LoggerUtil.debug(DefaultArrayService.class, "Words ending with '" + letter + "': " + count);
+        logger.debug("Words ending with '{}': {}", letter, count);
         return count;
     }
 }

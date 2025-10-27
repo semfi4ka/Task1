@@ -1,15 +1,15 @@
-package arrayapp.entity;
+package main.arrayapp.entity;
 
 import java.util.Arrays;
 
-public class IntArray {
-    private final int[] array;
+public class StringArray {
+    private final String[] array;
 
-    public IntArray(int[] array) {
-        this.array = array != null ? array.clone() : new int[0];
+    public StringArray(String[] array) {
+        this.array = array != null ? array.clone() : new String[0];
     }
 
-    public int[] getArray() {
+    public String[] getArray() {
         return array.clone();
     }
 

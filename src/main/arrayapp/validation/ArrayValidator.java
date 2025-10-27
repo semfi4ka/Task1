@@ -1,8 +1,7 @@
-package arrayapp.validation;
+package main.arrayapp.validation;
 
-import arrayapp.entity.StringArray;
-import arrayapp.exception.InvalidArrayException;
-import arrayapp.exception.InvalidDataException;
+import main.arrayapp.exception.InvalidArrayException;
+import main.arrayapp.exception.InvalidDataException;
 
 public final class ArrayValidator {
     private ArrayValidator() {}

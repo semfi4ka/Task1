@@ -1,16 +1,24 @@
-package arrayapp.service;
+package main.arrayapp.service;
 
-import arrayapp.entity.StringArray;
-import arrayapp.entity.ArrayFactory;
-import arrayapp.util.LoggerUtil;
+import main.arrayapp.entity.StringArray;
+import main.arrayapp.entity.ArrayFactory;
+import main.arrayapp.util.LoggerUtil;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
 public class SortService {
+    private static final Logger logger = LoggerUtil.getLogger(SortService.class);
 
+    // Сортировка пузырьком по длине слова
     public StringArray sortByLengthBubble(StringArray array) {
-        LoggerUtil.debug(SortService.class, "Bubble sorting by word length: " + array);
+        logger.debug("Bubble sorting by word length: {}", array);
+
+        if (array.isEmpty()) {
+            logger.debug("Empty array - nothing to sort");
+            return array;
+        }
 
         String[] arr = array.getArray();
         int n = arr.length;
@@ -18,6 +26,7 @@ public class SortService {
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
                 if (arr[j].length() > arr[j + 1].length()) {
+                    // Меняем слова местами
                     String temp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
@@ -26,12 +35,18 @@ public class SortService {
         }
 
         StringArray sortedArray = ArrayFactory.createFromArray(arr);
-        LoggerUtil.debug(SortService.class, "Bubble sorted by length: " + sortedArray);
+        logger.debug("Bubble sort completed. Result: {}", sortedArray);
         return sortedArray;
     }
 
+    // Сортировка выбором по длине слова
     public StringArray sortByLengthSelection(StringArray array) {
-        LoggerUtil.debug(SortService.class, "Selection sorting by word length: " + array);
+        logger.debug("Selection sorting by word length: {}", array);
+
+        if (array.isEmpty()) {
+            logger.debug("Empty array - nothing to sort");
+            return array;
+        }
 
         String[] arr = array.getArray();
         int n = arr.length;
@@ -43,18 +58,25 @@ public class SortService {
                     minIndex = j;
                 }
             }
+            // Меняем найденный минимальный элемент с первым элементом
             String temp = arr[minIndex];
             arr[minIndex] = arr[i];
             arr[i] = temp;
         }
 
         StringArray sortedArray = ArrayFactory.createFromArray(arr);
-        LoggerUtil.debug(SortService.class, "Selection sorted by length: " + sortedArray);
+        logger.debug("Selection sort completed. Result: {}", sortedArray);
         return sortedArray;
     }
 
+    // Быстрая сортировка по длине слова
     public StringArray sortByLengthQuick(StringArray array) {
-        LoggerUtil.debug(SortService.class, "Quick sorting by word length: " + array);
+        logger.debug("Quick sorting by word length: {}", array);
+
+        if (array.isEmpty()) {
+            logger.debug("Empty array - nothing to sort");
+            return array;
+        }
 
         String[] arr = array.getArray();
         if (arr.length > 1) {
@@ -62,7 +84,7 @@ public class SortService {
         }
 
         StringArray sortedArray = ArrayFactory.createFromArray(arr);
-        LoggerUtil.debug(SortService.class, "Quick sorted by length: " + sortedArray);
+        logger.debug("Quick sort completed. Result: {}", sortedArray);
         return sortedArray;
     }
 
@@ -94,36 +116,37 @@ public class SortService {
         return i + 1;
     }
 
+    // Алфавитная сортировка (без учета регистра)
     public StringArray sortAlphabetically(StringArray array) {
-        LoggerUtil.debug(SortService.class, "Sorting alphabetically: " + array);
+        logger.debug("Sorting alphabetically: {}", array);
+
+        if (array.isEmpty()) {
+            logger.debug("Empty array - nothing to sort");
+            return array;
+        }
 
         String[] arr = array.getArray();
         Arrays.sort(arr, String.CASE_INSENSITIVE_ORDER);
 
         StringArray sortedArray = ArrayFactory.createFromArray(arr);
-        LoggerUtil.debug(SortService.class, "Alphabetically sorted: " + sortedArray);
+        logger.debug("Alphabetical sort completed. Result: {}", sortedArray);
         return sortedArray;
     }
 
+    // Сортировка по длине в убывающем порядке
     public StringArray sortByLengthDescending(StringArray array) {
-        LoggerUtil.debug(SortService.class, "Sorting by length descending: " + array);
+        logger.debug("Sorting by length descending: {}", array);
+
+        if (array.isEmpty()) {
+            logger.debug("Empty array - nothing to sort");
+            return array;
+        }
 
         String[] arr = array.getArray();
         Arrays.sort(arr, Comparator.comparingInt(String::length).reversed());
 
         StringArray sortedArray = ArrayFactory.createFromArray(arr);
-        LoggerUtil.debug(SortService.class, "Sorted by length descending: " + sortedArray);
+        logger.debug("Length descending sort completed. Result: {}", sortedArray);
         return sortedArray;
-    }
-
-    public void testAllSortAlgorithms(StringArray originalArray) {
-        LoggerUtil.info(SortService.class, "Testing all sort algorithms on: " + originalArray);
-
-        LoggerUtil.debug(SortService.class, "Original: " + originalArray);
-        LoggerUtil.debug(SortService.class, "Bubble (by length): " + sortByLengthBubble(originalArray));
-        LoggerUtil.debug(SortService.class, "Selection (by length): " + sortByLengthSelection(originalArray));
-        LoggerUtil.debug(SortService.class, "Quick (by length): " + sortByLengthQuick(originalArray));
-        LoggerUtil.debug(SortService.class, "Alphabetical: " + sortAlphabetically(originalArray));
-        LoggerUtil.debug(SortService.class, "Length descending: " + sortByLengthDescending(originalArray));
     }
 }

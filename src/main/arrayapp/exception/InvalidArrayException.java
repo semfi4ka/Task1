@@ -1,4 +1,4 @@
-package arrayapp.exception;
+package main.arrayapp.exception;
 
 public class InvalidArrayException extends RuntimeException {
     public InvalidArrayException(String message) {
