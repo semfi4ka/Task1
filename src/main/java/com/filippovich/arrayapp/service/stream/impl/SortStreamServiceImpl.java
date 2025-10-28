@@ -1,18 +1,20 @@
-package main.java.com.filippovich.arrayapp.service.stream;
+package main.java.com.filippovich.arrayapp.service.stream.impl;
 
-import main.java.com.filippovich.arrayapp.entity.StringArray;
-import main.java.com.filippovich.arrayapp.entity.ArrayFactory;
+import main.java.com.filippovich.arrayapp.entity.impl.StringArrayImpl;
+import main.java.com.filippovich.arrayapp.entity.impl.ArrayFactory;
 import main.java.com.filippovich.arrayapp.exception.InvalidArrayException;
+import main.java.com.filippovich.arrayapp.service.stream.SortStreamService;
 import main.java.com.filippovich.arrayapp.util.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class StreamSortService {
-    private static final Logger logger = LoggerUtil.getLogger(StreamSortService.class);
+public class SortStreamServiceImpl implements SortStreamService {
+    private static final Logger logger = LoggerUtil.getLogger(SortStreamServiceImpl.class);
 
-    public StringArray sortWithStreamSorted(StringArray array) throws InvalidArrayException {
+    @Override
+    public StringArrayImpl sortWithStreamSorted(StringArrayImpl array) throws InvalidArrayException {
         logger.debug("Stream sorting by length: {}", array);
 
         if (array.isEmpty()) {
@@ -24,12 +26,13 @@ public class StreamSortService {
                 .sorted(Comparator.comparingInt(String::length))
                 .toArray(String[]::new);
 
-        StringArray result = ArrayFactory.createFromArray(sorted);
+        StringArrayImpl result = ArrayFactory.createFromArray(sorted);
         logger.debug("Stream sorted by length: {}", result);
         return result;
     }
 
-    public StringArray sortDescendingWithStream(StringArray array) throws InvalidArrayException {
+    @Override
+    public StringArrayImpl sortByLengthDescending(StringArrayImpl array) throws InvalidArrayException {
         logger.debug("Stream sorting by length descending: {}", array);
 
         if (array.isEmpty()) {
@@ -41,12 +44,13 @@ public class StreamSortService {
                 .sorted(Comparator.comparingInt(String::length).reversed())
                 .toArray(String[]::new);
 
-        StringArray result = ArrayFactory.createFromArray(sorted);
+        StringArrayImpl result = ArrayFactory.createFromArray(sorted);
         logger.debug("Stream sorted by length descending: {}", result);
         return result;
     }
 
-    public StringArray sortAlphabeticallyWithStream(StringArray array) throws InvalidArrayException {
+    @Override
+    public StringArrayImpl sortAlphabetically(StringArrayImpl array) throws InvalidArrayException {
         logger.debug("Stream sorting alphabetically: {}", array);
 
         if (array.isEmpty()) {
@@ -58,12 +62,13 @@ public class StreamSortService {
                 .sorted(String.CASE_INSENSITIVE_ORDER)
                 .toArray(String[]::new);
 
-        StringArray result = ArrayFactory.createFromArray(sorted);
+        StringArrayImpl result = ArrayFactory.createFromArray(sorted);
         logger.debug("Stream sorted alphabetically: {}", result);
         return result;
     }
 
-    public StringArray sortAlphabeticallyDescendingWithStream(StringArray array) throws InvalidArrayException {
+    @Override
+    public StringArrayImpl sortAlphabeticallyDescendingWithStream(StringArrayImpl array) throws InvalidArrayException {
         logger.debug("Stream sorting alphabetically descending: {}", array);
 
         if (array.isEmpty()) {
@@ -75,12 +80,13 @@ public class StreamSortService {
                 .sorted(String.CASE_INSENSITIVE_ORDER.reversed())
                 .toArray(String[]::new);
 
-        StringArray result = ArrayFactory.createFromArray(sorted);
+        StringArrayImpl result = ArrayFactory.createFromArray(sorted);
         logger.debug("Stream sorted alphabetically descending: {}", result);
         return result;
     }
 
-    public StringArray sortParallelStream(StringArray array) throws InvalidArrayException {
+    @Override
+    public StringArrayImpl sortParallelStream(StringArrayImpl array) throws InvalidArrayException {
         logger.debug("Parallel stream sorting by length: {}", array);
 
         if (array.isEmpty()) {
@@ -93,12 +99,13 @@ public class StreamSortService {
                 .sorted(Comparator.comparingInt(String::length))
                 .toArray(String[]::new);
 
-        StringArray result = ArrayFactory.createFromArray(sorted);
+        StringArrayImpl result = ArrayFactory.createFromArray(sorted);
         logger.debug("Parallel stream sorted: {}", result);
         return result;
     }
 
-    public String[] findTopNLongest(StringArray array, int n) {
+    @Override
+    public String[] findTopNLongest(StringArrayImpl array, int n) {
         logger.debug("Finding top {} longest words: {}", n, array);
 
         if (array.isEmpty()) {
@@ -115,7 +122,8 @@ public class StreamSortService {
         return result;
     }
 
-    public String[] findTopNShortest(StringArray array, int n) {
+    @Override
+    public String[] findTopNShortest(StringArrayImpl array, int n) {
         logger.debug("Finding top {} shortest words: {}", n, array);
 
         if (array.isEmpty()) {
@@ -132,7 +140,8 @@ public class StreamSortService {
         return result;
     }
 
-    public String[] findUniqueSorted(StringArray array) {
+    @Override
+    public String[] findUniqueSorted(StringArrayImpl array) {
         logger.debug("Finding unique sorted words: {}", array);
 
         if (array.isEmpty()) {
@@ -149,7 +158,8 @@ public class StreamSortService {
         return result;
     }
 
-    public String[] findUniqueAlphabetically(StringArray array) {
+    @Override
+    public String[] findUniqueAlphabetically(StringArrayImpl array) {
         logger.debug("Finding unique alphabetically sorted words: {}", array);
 
         if (array.isEmpty()) {
@@ -166,13 +176,14 @@ public class StreamSortService {
         return result;
     }
 
-    public void testAllStreamSorts(StringArray originalArray) throws InvalidArrayException {
+    @Override
+    public void testAllStreamSorts(StringArrayImpl originalArray) throws InvalidArrayException {
         logger.info("Testing all Stream sorts on: {}", originalArray);
 
         logger.debug("Original: {}", originalArray);
         logger.debug("By length: {}", sortWithStreamSorted(originalArray));
-        logger.debug("By length descending: {}", sortDescendingWithStream(originalArray));
-        logger.debug("Alphabetically: {}", sortAlphabeticallyWithStream(originalArray));
+        logger.debug("By length descending: {}", sortByLengthDescending(originalArray));
+        logger.debug("Alphabetically: {}", sortAlphabetically(originalArray));
         logger.debug("Alphabetically descending: {}", sortAlphabeticallyDescendingWithStream(originalArray));
         logger.debug("Parallel: {}", sortParallelStream(originalArray));
 

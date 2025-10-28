@@ -1,7 +1,7 @@
-package main.java.com.filippovich.arrayapp.service.stream;
+package main.java.com.filippovich.arrayapp.service.stream.impl;
 
-import main.java.com.filippovich.arrayapp.entity.StringArray;
-import main.java.com.filippovich.arrayapp.entity.ArrayFactory;
+import main.java.com.filippovich.arrayapp.entity.impl.StringArrayImpl;
+import main.java.com.filippovich.arrayapp.entity.impl.ArrayFactory;
 import main.java.com.filippovich.arrayapp.exception.InvalidArrayException;
 import main.java.com.filippovich.arrayapp.service.ArrayService;
 import main.java.com.filippovich.arrayapp.util.LoggerUtil;
@@ -10,11 +10,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class ArrayStreamService implements ArrayService {
-    private static final Logger logger = LoggerUtil.getLogger(ArrayStreamService.class);
+public class ArrayStreamServiceImpl implements ArrayService {
+    private static final Logger logger = LoggerUtil.getLogger(ArrayStreamServiceImpl.class);
 
     @Override
-    public String findShortestWord(StringArray array) {
+    public String findShortestWord(StringArrayImpl array) {
         logger.debug("Finding shortest word using Stream API in array: {}", array);
 
         String result = Arrays.stream(array.getArray())
@@ -26,7 +26,7 @@ public class ArrayStreamService implements ArrayService {
     }
 
     @Override
-    public String findLongestWord(StringArray array) {
+    public String findLongestWord(StringArrayImpl array) {
         logger.debug("Finding longest word using Stream API in array: {}", array);
 
         String result = Arrays.stream(array.getArray())
@@ -38,7 +38,7 @@ public class ArrayStreamService implements ArrayService {
     }
 
     @Override
-    public double calculateAverageLength(StringArray array) {
+    public double calculateAverageLength(StringArrayImpl array) {
         logger.debug("Calculating average word length using Stream API in array: {}", array);
 
         double result = Arrays.stream(array.getArray())
@@ -46,12 +46,12 @@ public class ArrayStreamService implements ArrayService {
                 .average()
                 .orElse(0.0);
 
-        logger.debug("Average word length: {:.2f}", result);
+        logger.debug("Average word length: {}", result);
         return result;
     }
 
     @Override
-    public int calculateTotalCharacters(StringArray array) {
+    public int calculateTotalCharacters(StringArrayImpl array) {
         logger.debug("Calculating total characters using Stream API in array: {}", array);
 
         int result = Arrays.stream(array.getArray())
@@ -63,7 +63,7 @@ public class ArrayStreamService implements ArrayService {
     }
 
     @Override
-    public int countWordsLongerThan(StringArray array, int minLength) {
+    public int countWordsLongerThan(StringArrayImpl array, int minLength) {
         logger.debug("Counting words longer than {} using Stream API in array: {}", minLength, array);
 
         long result = Arrays.stream(array.getArray())
@@ -75,7 +75,7 @@ public class ArrayStreamService implements ArrayService {
     }
 
     @Override
-    public int countWordsShorterThan(StringArray array, int maxLength) {
+    public int countWordsShorterThan(StringArrayImpl array, int maxLength) {
         logger.debug("Counting words shorter than {} using Stream API in array: {}", maxLength, array);
 
         long result = Arrays.stream(array.getArray())
@@ -87,32 +87,20 @@ public class ArrayStreamService implements ArrayService {
     }
 
     @Override
-    public int countWordsWithExactLength(StringArray array, int length) {
-        logger.debug("Counting words with exact length {} using Stream API in array: {}", length, array);
-
-        long result = Arrays.stream(array.getArray())
-                .filter(word -> word.length() == length)
-                .count();
-
-        logger.debug("Words with length {}: {}", length, result);
-        return (int) result;
-    }
-
-    @Override
-    public StringArray replaceWords(StringArray array, String oldWord, String newWord) throws InvalidArrayException {
+    public StringArrayImpl replaceWords(StringArrayImpl array, String oldWord, String newWord) throws InvalidArrayException {
         logger.debug("Replacing words using Stream API in array: {}, '{}' -> '{}'", array, oldWord, newWord);
 
         String[] result = Arrays.stream(array.getArray())
                 .map(word -> word.equals(oldWord) ? newWord : word)
                 .toArray(String[]::new);
 
-        StringArray replacedArray = ArrayFactory.createFromArray(result);
+        StringArrayImpl replacedArray = ArrayFactory.createFromArray(result);
         logger.debug("Words replaced successfully. Result: {}", replacedArray);
         return replacedArray;
     }
 
     @Override
-    public StringArray replaceWordsByLength(StringArray array, int targetLength, String newWord) throws InvalidArrayException {
+    public StringArrayImpl replaceWordsByLength(StringArrayImpl array, int targetLength, String newWord) throws InvalidArrayException {
         logger.debug("Replacing words by length using Stream API in array: {}, length {} -> '{}'",
                 array, targetLength, newWord);
 
@@ -120,13 +108,13 @@ public class ArrayStreamService implements ArrayService {
                 .map(word -> word.length() == targetLength ? newWord : word)
                 .toArray(String[]::new);
 
-        StringArray replacedArray = ArrayFactory.createFromArray(result);
+        StringArrayImpl replacedArray = ArrayFactory.createFromArray(result);
         logger.debug("Words replaced by length successfully. Result: {}", replacedArray);
         return replacedArray;
     }
 
     @Override
-    public String findFirstAlphabetically(StringArray array) {
+    public String findFirstAlphabetically(StringArrayImpl array) {
         logger.debug("Finding first word alphabetically using Stream API in array: {}", array);
 
         String result = Arrays.stream(array.getArray())
@@ -138,7 +126,7 @@ public class ArrayStreamService implements ArrayService {
     }
 
     @Override
-    public String findLastAlphabetically(StringArray array) {
+    public String findLastAlphabetically(StringArrayImpl array) {
         logger.debug("Finding last word alphabetically using Stream API in array: {}", array);
 
         String result = Arrays.stream(array.getArray())
@@ -150,7 +138,7 @@ public class ArrayStreamService implements ArrayService {
     }
 
     @Override
-    public int countWordsStartingWith(StringArray array, char letter) {
+    public int countWordsStartingWith(StringArrayImpl array, char letter) {
         logger.debug("Counting words starting with '{}' using Stream API in array: {}", letter, array);
 
         long result = Arrays.stream(array.getArray())
@@ -163,7 +151,7 @@ public class ArrayStreamService implements ArrayService {
     }
 
     @Override
-    public int countWordsEndingWith(StringArray array, char letter) {
+    public int countWordsEndingWith(StringArrayImpl array, char letter) {
         logger.debug("Counting words ending with '{}' using Stream API in array: {}", letter, array);
 
         long result = Arrays.stream(array.getArray())
@@ -175,7 +163,7 @@ public class ArrayStreamService implements ArrayService {
         return (int) result;
     }
 
-    public String[] findWordsLongerThan(StringArray array, int minLength) {
+    public String[] findWordsLongerThan(StringArrayImpl array, int minLength) {
         logger.debug("Finding words longer than {} using Stream API in array: {}", minLength, array);
 
         String[] result = Arrays.stream(array.getArray())
@@ -186,7 +174,7 @@ public class ArrayStreamService implements ArrayService {
         return result;
     }
 
-    public String[] findWordsContaining(StringArray array, String substring) {
+    public String[] findWordsContaining(StringArrayImpl array, String substring) {
         logger.debug("Finding words containing '{}' using Stream API in array: {}", substring, array);
 
         String[] result = Arrays.stream(array.getArray())
@@ -197,7 +185,7 @@ public class ArrayStreamService implements ArrayService {
         return result;
     }
 
-    public String[] getUniqueWords(StringArray array) {
+    public String[] getUniqueWords(StringArrayImpl array) {
         logger.debug("Getting unique words using Stream API in array: {}", array);
 
         String[] result = Arrays.stream(array.getArray())
@@ -208,7 +196,7 @@ public class ArrayStreamService implements ArrayService {
         return result;
     }
 
-    public String[] getWordsSortedByLength(StringArray array) {
+    public String[] getWordsSortedByLength(StringArrayImpl array) {
         logger.debug("Getting words sorted by length using Stream API in array: {}", array);
 
         String[] result = Arrays.stream(array.getArray())
@@ -219,7 +207,7 @@ public class ArrayStreamService implements ArrayService {
         return result;
     }
 
-    public String[] getWordsSortedAlphabetically(StringArray array) {
+    public String[] getWordsSortedAlphabetically(StringArrayImpl array) {
         logger.debug("Getting words sorted alphabetically using Stream API in array: {}", array);
 
         String[] result = Arrays.stream(array.getArray())
@@ -230,7 +218,7 @@ public class ArrayStreamService implements ArrayService {
         return result;
     }
 
-    public String[] getWordsStartingWith(StringArray array, char letter) {
+    public String[] getWordsStartingWith(StringArrayImpl array, char letter) {
         logger.debug("Getting words starting with '{}' using Stream API in array: {}", letter, array);
 
         String[] result = Arrays.stream(array.getArray())
@@ -242,7 +230,7 @@ public class ArrayStreamService implements ArrayService {
         return result;
     }
 
-    public String[] getWordsEndingWith(StringArray array, char letter) {
+    public String[] getWordsEndingWith(StringArrayImpl array, char letter) {
         logger.debug("Getting words ending with '{}' using Stream API in array: {}", letter, array);
 
         String[] result = Arrays.stream(array.getArray())
@@ -254,7 +242,7 @@ public class ArrayStreamService implements ArrayService {
         return result;
     }
 
-    public int findMaxWordLength(StringArray array) {
+    public int findMaxWordLength(StringArrayImpl array) {
         logger.debug("Finding maximum word length using Stream API in array: {}", array);
 
         int result = Arrays.stream(array.getArray())
@@ -266,7 +254,7 @@ public class ArrayStreamService implements ArrayService {
         return result;
     }
 
-    public int findMinWordLength(StringArray array) {
+    public int findMinWordLength(StringArrayImpl array) {
         logger.debug("Finding minimum word length using Stream API in array: {}", array);
 
         int result = Arrays.stream(array.getArray())
@@ -278,7 +266,7 @@ public class ArrayStreamService implements ArrayService {
         return result;
     }
 
-    public long countDistinctWordLengths(StringArray array) {
+    public long countDistinctWordLengths(StringArrayImpl array) {
         logger.debug("Counting distinct word lengths using Stream API in array: {}", array);
 
         long result = Arrays.stream(array.getArray())
@@ -290,7 +278,7 @@ public class ArrayStreamService implements ArrayService {
         return result;
     }
 
-    public String[] getTopLongestWords(StringArray array, int count) {
+    public String[] getTopLongestWords(StringArrayImpl array, int count) {
         logger.debug("Getting top {} longest words using Stream API in array: {}", count, array);
 
         String[] result = Arrays.stream(array.getArray())
@@ -302,7 +290,7 @@ public class ArrayStreamService implements ArrayService {
         return result;
     }
 
-    public String[] getTopShortestWords(StringArray array, int count) {
+    public String[] getTopShortestWords(StringArrayImpl array, int count) {
         logger.debug("Getting top {} shortest words using Stream API in array: {}", count, array);
 
         String[] result = Arrays.stream(array.getArray())
@@ -314,7 +302,7 @@ public class ArrayStreamService implements ArrayService {
         return result;
     }
 
-    public boolean allWordsMatchCondition(StringArray array, String condition) {
+    public boolean allWordsMatchCondition(StringArrayImpl array, String condition) {
         logger.debug("Checking if all words match condition '{}' using Stream API in array: {}", condition, array);
 
         boolean result;
@@ -341,7 +329,7 @@ public class ArrayStreamService implements ArrayService {
         return result;
     }
 
-    public boolean anyWordMatchesCondition(StringArray array, String condition) {
+    public boolean anyWordMatchesCondition(StringArrayImpl array, String condition) {
         logger.debug("Checking if any word matches condition '{}' using Stream API in array: {}", condition, array);
 
         boolean result;
@@ -370,7 +358,7 @@ public class ArrayStreamService implements ArrayService {
         return result;
     }
 
-    public void demonstrateAllStreamOperations(StringArray array) {
+    public void demonstrateAllStreamOperations(StringArrayImpl array) {
         logger.info("=== DEMONSTRATING ALL STREAM OPERATIONS ===");
         logger.info("Original array: {}", array);
 

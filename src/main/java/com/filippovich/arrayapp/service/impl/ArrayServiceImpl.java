@@ -1,16 +1,17 @@
-package main.java.com.filippovich.arrayapp.service;
+package main.java.com.filippovich.arrayapp.service.impl;
 
-import main.java.com.filippovich.arrayapp.entity.StringArray;
-import main.java.com.filippovich.arrayapp.entity.ArrayFactory;
+import main.java.com.filippovich.arrayapp.entity.impl.StringArrayImpl;
+import main.java.com.filippovich.arrayapp.entity.impl.ArrayFactory;
 import main.java.com.filippovich.arrayapp.exception.InvalidArrayException;
+import main.java.com.filippovich.arrayapp.service.ArrayService;
 import main.java.com.filippovich.arrayapp.util.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 
-public class DefaultArrayService implements ArrayService {
-    private static final Logger logger = LoggerUtil.getLogger(DefaultArrayService.class);
+public class ArrayServiceImpl implements ArrayService {
+    private static final Logger logger = LoggerUtil.getLogger(ArrayServiceImpl.class);
 
     @Override
-    public String findShortestWord(StringArray array) {
+    public String findShortestWord(StringArrayImpl array) {
         logger.debug("Finding shortest word in array: {}", array);
 
         if (array.isEmpty()) {
@@ -31,7 +32,7 @@ public class DefaultArrayService implements ArrayService {
     }
 
     @Override
-    public String findLongestWord(StringArray array) {
+    public String findLongestWord(StringArrayImpl array) {
         logger.debug("Finding longest word in array: {}", array);
 
         if (array.isEmpty()) {
@@ -52,7 +53,7 @@ public class DefaultArrayService implements ArrayService {
     }
 
     @Override
-    public double calculateAverageLength(StringArray array) {
+    public double calculateAverageLength(StringArrayImpl array) {
         logger.debug("Calculating average word length in array: {}", array);
 
         if (array.isEmpty()) {
@@ -67,12 +68,12 @@ public class DefaultArrayService implements ArrayService {
         }
 
         double average = (double) totalLength / array.length();
-        logger.debug("Average word length: {:.2f}", average);
+        logger.debug("Average word length: {}", average);
         return average;
     }
 
     @Override
-    public int calculateTotalCharacters(StringArray array) {
+    public int calculateTotalCharacters(StringArrayImpl array) {
         logger.debug("Calculating total characters in array: {}", array);
 
         String[] arr = array.getArray();
@@ -86,7 +87,7 @@ public class DefaultArrayService implements ArrayService {
     }
 
     @Override
-    public int countWordsLongerThan(StringArray array, int minLength) {
+    public int countWordsLongerThan(StringArrayImpl array, int minLength) {
         logger.debug("Counting words longer than {} in array: {}", minLength, array);
 
         String[] arr = array.getArray();
@@ -102,7 +103,7 @@ public class DefaultArrayService implements ArrayService {
     }
 
     @Override
-    public int countWordsShorterThan(StringArray array, int maxLength) {
+    public int countWordsShorterThan(StringArrayImpl array, int maxLength) {
         logger.debug("Counting words shorter than {} in array: {}", maxLength, array);
 
         String[] arr = array.getArray();
@@ -118,23 +119,7 @@ public class DefaultArrayService implements ArrayService {
     }
 
     @Override
-    public int countWordsWithExactLength(StringArray array, int length) {
-        logger.debug("Counting words with exact length {} in array: {}", length, array);
-
-        String[] arr = array.getArray();
-        int count = 0;
-        for (String word : arr) {
-            if (word.length() == length) {
-                count++;
-            }
-        }
-
-        logger.debug("Words with length {}: {}", length, count);
-        return count;
-    }
-
-    @Override
-    public StringArray replaceWords(StringArray array, String oldWord, String newWord) throws InvalidArrayException {
+    public StringArrayImpl replaceWords(StringArrayImpl array, String oldWord, String newWord) throws InvalidArrayException {
         logger.debug("Replacing words in array: {}, oldWord: '{}', newWord: '{}'", array, oldWord, newWord);
 
         String[] arr = array.getArray();
@@ -144,13 +129,13 @@ public class DefaultArrayService implements ArrayService {
             result[i] = arr[i].equals(oldWord) ? newWord : arr[i];
         }
 
-        StringArray replacedArray = ArrayFactory.createFromArray(result);
+        StringArrayImpl replacedArray = ArrayFactory.createFromArray(result);
         logger.debug("Words replaced. Result: {}", replacedArray);
         return replacedArray;
     }
 
     @Override
-    public StringArray replaceWordsByLength(StringArray array, int targetLength, String newWord) throws InvalidArrayException {
+    public StringArrayImpl replaceWordsByLength(StringArrayImpl array, int targetLength, String newWord) throws InvalidArrayException {
         logger.debug("Replacing words with length {} with '{}' in array: {}", targetLength, newWord, array);
 
         String[] arr = array.getArray();
@@ -160,13 +145,13 @@ public class DefaultArrayService implements ArrayService {
             result[i] = (arr[i].length() == targetLength) ? newWord : arr[i];
         }
 
-        StringArray replacedArray = ArrayFactory.createFromArray(result);
+        StringArrayImpl replacedArray = ArrayFactory.createFromArray(result);
         logger.debug("Words replaced by length. Result: {}", replacedArray);
         return replacedArray;
     }
 
     @Override
-    public String findFirstAlphabetically(StringArray array) {
+    public String findFirstAlphabetically(StringArrayImpl array) {
         logger.debug("Finding first word alphabetically in array: {}", array);
 
         if (array.isEmpty()) {
@@ -187,7 +172,7 @@ public class DefaultArrayService implements ArrayService {
     }
 
     @Override
-    public String findLastAlphabetically(StringArray array) {
+    public String findLastAlphabetically(StringArrayImpl array) {
         logger.debug("Finding last word alphabetically in array: {}", array);
 
         if (array.isEmpty()) {
@@ -208,7 +193,7 @@ public class DefaultArrayService implements ArrayService {
     }
 
     @Override
-    public int countWordsStartingWith(StringArray array, char letter) {
+    public int countWordsStartingWith(StringArrayImpl array, char letter) {
         logger.debug("Counting words starting with '{}' in array: {}", letter, array);
 
         String[] arr = array.getArray();
@@ -224,7 +209,7 @@ public class DefaultArrayService implements ArrayService {
     }
 
     @Override
-    public int countWordsEndingWith(StringArray array, char letter) {
+    public int countWordsEndingWith(StringArrayImpl array, char letter) {
         logger.debug("Counting words ending with '{}' in array: {}", letter, array);
 
         String[] arr = array.getArray();

@@ -1,25 +1,24 @@
 package main.java.com.filippovich.arrayapp.service;
 
-import main.java.com.filippovich.arrayapp.entity.StringArray;
+import main.java.com.filippovich.arrayapp.entity.impl.StringArrayImpl;
 import main.java.com.filippovich.arrayapp.exception.InvalidArrayException;
 
 public interface ArrayService {
 
-    String findShortestWord(StringArray array);
-    String findLongestWord(StringArray array);
+    String findShortestWord(StringArrayImpl array);
+    String findLongestWord(StringArrayImpl array);
 
-    double calculateAverageLength(StringArray array);
-    int calculateTotalCharacters(StringArray array);
+    double calculateAverageLength(StringArrayImpl array);
+    int calculateTotalCharacters(StringArrayImpl array);
 
-    int countWordsLongerThan(StringArray array, int minLength);
-    int countWordsShorterThan(StringArray array, int maxLength);
-    int countWordsWithExactLength(StringArray array, int length);
+    int countWordsLongerThan(StringArrayImpl array, int minLength);
+    int countWordsShorterThan(StringArrayImpl array, int maxLength);
 
-    StringArray replaceWords(StringArray array, String oldWord, String newWord) throws InvalidArrayException;
-    StringArray replaceWordsByLength(StringArray array, int targetLength, String newWord) throws InvalidArrayException;
+    StringArrayImpl replaceWords(StringArrayImpl array, String oldWord, String newWord) throws InvalidArrayException;
+    StringArrayImpl replaceWordsByLength(StringArrayImpl array, int targetLength, String newWord) throws InvalidArrayException;
 
-    String findFirstAlphabetically(StringArray array);
-    String findLastAlphabetically(StringArray array);
-    int countWordsStartingWith(StringArray array, char letter);
-    int countWordsEndingWith(StringArray array, char letter);
+    String findFirstAlphabetically(StringArrayImpl array);
+    String findLastAlphabetically(StringArrayImpl array);
+    int countWordsStartingWith(StringArrayImpl array, char letter);
+    int countWordsEndingWith(StringArrayImpl array, char letter);
 }

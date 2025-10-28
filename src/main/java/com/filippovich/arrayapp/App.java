@@ -1,22 +1,32 @@
 package main.java.com.filippovich.arrayapp;
 
 import main.java.com.filippovich.arrayapp.exception.InvalidArrayException;
+import main.java.com.filippovich.arrayapp.reader.impl.ArrayFileReaderImpl;
+import main.java.com.filippovich.arrayapp.repository.impl.StringArrayRepositoryImpl;
+import main.java.com.filippovich.arrayapp.service.comparator.impl.StringArrayComparatorsImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.config.ConfigurationSource;
 import org.apache.logging.log4j.core.config.Configurator;
 import main.java.com.filippovich.arrayapp.entity.StringArray;
-import main.java.com.filippovich.arrayapp.entity.ArrayFactory;
+import main.java.com.filippovich.arrayapp.entity.impl.StringArrayImpl;
+import main.java.com.filippovich.arrayapp.entity.impl.ArrayFactory;
+
+import main.java.com.filippovich.arrayapp.repository.*;
+import main.java.com.filippovich.arrayapp.repository.specification.*;
+import main.java.com.filippovich.arrayapp.warehouse.Warehouse;
+
+
 import main.java.com.filippovich.arrayapp.service.ArrayService;
-import main.java.com.filippovich.arrayapp.service.DefaultArrayService;
-import main.java.com.filippovich.arrayapp.service.SortService;
-import main.java.com.filippovich.arrayapp.service.stream.ArrayStreamService;
-import main.java.com.filippovich.arrayapp.service.stream.StreamSortService;
-import main.java.com.filippovich.arrayapp.reader.ArrayFileReader;
+import main.java.com.filippovich.arrayapp.service.impl.ArrayServiceImpl;
+import main.java.com.filippovich.arrayapp.service.impl.SortServiceImpl;
+import main.java.com.filippovich.arrayapp.service.stream.impl.ArrayStreamServiceImpl;
+import main.java.com.filippovich.arrayapp.service.stream.impl.SortStreamServiceImpl;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Arrays;
+import java.util.List;
 
 public class App {
     private static final Logger logger;
@@ -72,13 +82,66 @@ public class App {
         testStreamSorting();
         testSortingAlgorithms();
         testFileOperations();
+        testRepositoryAndWarehouse();
 
         logger.info("All test suites completed!");
     }
 
+    private static void testRepositoryAndWarehouse() throws InvalidArrayException {
+        logger.info("=== REPOSITORY, WAREHOUSE & SPECIFICATION TEST ===");
+
+        Warehouse warehouse = Warehouse.getInstance();
+        StringArrayRepository repository = StringArrayRepositoryImpl.getInstance();
+
+        logger.info("--- Test 1: Add to Repository & Check Warehouse (Observer) ---");
+
+        StringArrayImpl array1 = ArrayFactory.createFromArray(new String[]{"apple", "banana", "cat"});
+        logger.info("Created array 1: {}", array1);
+        logger.info("Warehouse stats for array 1: {}", warehouse.getStatistics(array1.getId()).orElse(null));
+
+        StringArrayImpl array2 = ArrayFactory.createFromArray(new String[]{"Zebra", "Lion", "Ant", "Tiger"});
+        logger.info("Created array 2: {}", array2);
+        logger.info("Warehouse stats for array 2: {}", warehouse.getStatistics(array2.getId()).orElse(null));
+
+        StringArrayImpl array3 = ArrayFactory.createFromArray(new String[]{"a", "b"});
+        logger.info("Created array 3: {}", array3);
+        logger.info("Warehouse stats for array 3: {}", warehouse.getStatistics(array3.getId()).orElse(null));
+
+        logger.info("--- Test 2: Remove from Repository & Check Warehouse ---");
+        logger.info("Removing array 2...");
+        repository.remove(array2);
+        logger.info("Stats for removed array 2 in Warehouse: {}", warehouse.getStatistics(array2.getId()).orElse(null));
+        logger.info("Total arrays in repository: {}", repository.findAll().size());
+
+        logger.info("--- Test 3: Query Repository with Specifications ---");
+
+        Specification idSpec = new IdSpecification(array1.getId());
+        List<StringArray> idResult = repository.query(idSpec);
+        logger.info("Query: Find by ID {}. Found: {}", array1.getId(), idResult);
+        Specification maxLenSpec = new MaxLengthSpecification(1);
+        List<StringArray> maxLenResult = repository.query(maxLenSpec);
+        logger.info("Query: Find where max word length = 1. Found: {}", maxLenResult);
+
+        logger.info("--- Test 4: Sort Repository results with Comparators ---");
+        List<StringArray> allArrays = repository.findAll();
+        logger.info("Unsorted list: {}", allArrays);
+
+        StringArrayComparatorsImpl comparatorFactory = new StringArrayComparatorsImpl();
+
+        allArrays.sort(comparatorFactory.byId());
+        logger.info("Sorted by ID: {}", allArrays);
+
+        allArrays.sort(comparatorFactory.byLength());
+        logger.info("Sorted by Length (word count): {}", allArrays);
+
+        allArrays.sort(comparatorFactory.byFirstElement());
+        logger.info("Sorted by First Element: {}", allArrays);
+    }
+
+
     private static void testFileOperations() {
         logger.info("=== FILE OPERATIONS TEST ===");
-        ArrayFileReader fileReader = new ArrayFileReader();
+        ArrayFileReaderImpl fileReader = new ArrayFileReaderImpl();
 
         try {
             logger.info("Reading file...");
@@ -98,13 +161,13 @@ public class App {
         }
     }
 
-    private static void processArraysFromFile(java.util.List<StringArray> arrays) throws InvalidArrayException {
+    private static void processArraysFromFile(java.util.List<StringArrayImpl> arrays) throws InvalidArrayException {
         logger.info("Processing arrays from file - Total arrays: {}", arrays.size());
-        ArrayService arrayService = new DefaultArrayService();
-        SortService sortService = new SortService();
+        ArrayService arrayService = new ArrayServiceImpl();
+        SortServiceImpl sortServiceImpl = new SortServiceImpl();
 
         for (int i = 0; i < arrays.size(); i++) {
-            StringArray array = arrays.get(i);
+            StringArrayImpl array = arrays.get(i);
             logger.info("--- Processing Word Array {} ---", i + 1);
             logger.info("Original array: {}", array);
 
@@ -116,11 +179,11 @@ public class App {
 
             logger.info("Shortest word: '{}'", shortest);
             logger.info("Longest word: '{}'", longest);
-            logger.info("Average word length: {:.2f}", average);
+            logger.info("Average word length: {}", average);
             logger.info("Total characters: {}", totalChars);
             logger.info("Words longer than 5 characters: {}", wordsLongerThan5);
 
-            StringArray sorted = sortService.sortByLengthBubble(array);
+            StringArrayImpl sorted = sortServiceImpl.sortByLengthBubble(array);
             logger.info("Sorted by length (Bubble): {}", sorted);
 
             logger.info("--- End of Array {} ---", i + 1);
@@ -131,15 +194,15 @@ public class App {
         logger.info("=== STREAM API OPERATIONS TEST ===");
 
         String[] testData = {"apple", "banana", "cat", "elephant", "dog", "zebra"};
-        StringArray array = ArrayFactory.createFromArray(testData);
-        ArrayStreamService streamService = new ArrayStreamService();
+        StringArrayImpl array = ArrayFactory.createFromArray(testData);
+        ArrayStreamServiceImpl streamService = new ArrayStreamServiceImpl();
 
         logger.info("Test array: {}", array);
 
         logger.info("--- Basic Stream Operations ---");
         logger.info("Shortest word: '{}'", streamService.findShortestWord(array));
         logger.info("Longest word: '{}'", streamService.findLongestWord(array));
-        logger.info("Average length: {:.2f}", streamService.calculateAverageLength(array));
+        logger.info("Average length: {}", streamService.calculateAverageLength(array));
         logger.info("Total characters: {}", streamService.calculateTotalCharacters(array));
         logger.info("Words longer than 4: {}", streamService.countWordsLongerThan(array, 4));
         logger.info("Words shorter than 4: {}", streamService.countWordsShorterThan(array, 4));
@@ -166,51 +229,51 @@ public class App {
         logger.info("=== STREAM SORTING TEST ===");
 
         String[] testData = {"elephant", "cat", "banana", "ant", "dog", "zebra", "cat"};
-        StringArray array = ArrayFactory.createFromArray(testData);
-        StreamSortService streamSortService = new StreamSortService();
+        StringArrayImpl array = ArrayFactory.createFromArray(testData);
+        SortStreamServiceImpl sortStreamServiceImpl = new SortStreamServiceImpl();
 
         logger.info("Original array: {}", array);
-        logger.info("Sorted by length: {}", streamSortService.sortWithStreamSorted(array));
-        logger.info("Sorted by length descending: {}", streamSortService.sortDescendingWithStream(array));
-        logger.info("Sorted alphabetically: {}", streamSortService.sortAlphabeticallyWithStream(array));
-        logger.info("Sorted alphabetically descending: {}", streamSortService.sortAlphabeticallyDescendingWithStream(array));
-        logger.info("Parallel sorted: {}", streamSortService.sortParallelStream(array));
+        logger.info("Sorted by length: {}", sortStreamServiceImpl.sortWithStreamSorted(array));
+        logger.info("Sorted by length descending: {}", sortStreamServiceImpl.sortByLengthDescending(array));
+        logger.info("Sorted alphabetically: {}", sortStreamServiceImpl.sortAlphabetically(array));
+        logger.info("Sorted alphabetically descending: {}", sortStreamServiceImpl.sortAlphabeticallyDescendingWithStream(array));
+        logger.info("Parallel sorted: {}", sortStreamServiceImpl.sortParallelStream(array));
 
         logger.info("--- Advanced Stream Sorting ---");
-        logger.info("Top 2 longest: {}", Arrays.toString(streamSortService.findTopNLongest(array, 2)));
-        logger.info("Top 2 shortest: {}", Arrays.toString(streamSortService.findTopNShortest(array, 2)));
-        logger.info("Unique by length: {}", Arrays.toString(streamSortService.findUniqueSorted(array)));
-        logger.info("Unique alphabetically: {}", Arrays.toString(streamSortService.findUniqueAlphabetically(array)));
+        logger.info("Top 2 longest: {}", Arrays.toString(sortStreamServiceImpl.findTopNLongest(array, 2)));
+        logger.info("Top 2 shortest: {}", Arrays.toString(sortStreamServiceImpl.findTopNShortest(array, 2)));
+        logger.info("Unique by length: {}", Arrays.toString(sortStreamServiceImpl.findUniqueSorted(array)));
+        logger.info("Unique alphabetically: {}", Arrays.toString(sortStreamServiceImpl.findUniqueAlphabetically(array)));
     }
 
     private static void testSortingAlgorithms() throws InvalidArrayException {
         logger.info("=== SORTING ALGORITHMS TEST ===");
 
         String[] testData = {"elephant", "cat", "banana", "ant", "dog", "zebra", "programming"};
-        StringArray array = ArrayFactory.createFromArray(testData);
-        SortService sortService = new SortService();
+        StringArrayImpl array = ArrayFactory.createFromArray(testData);
+        SortServiceImpl sortServiceImpl = new SortServiceImpl();
 
         logger.info("Original array: {}", array);
 
         logger.info("--- Length-Based Sorting ---");
-        logger.info("Bubble sort (by length): {}", sortService.sortByLengthBubble(array));
-        logger.info("Selection sort (by length): {}", sortService.sortByLengthSelection(array));
-        logger.info("Quick sort (by length): {}", sortService.sortByLengthQuick(array));
-        logger.info("Length descending: {}", sortService.sortByLengthDescending(array));
+        logger.info("Bubble sort (by length): {}", sortServiceImpl.sortByLengthBubble(array));
+        logger.info("Selection sort (by length): {}", sortServiceImpl.sortByLengthSelection(array));
+        logger.info("Quick sort (by length): {}", sortServiceImpl.sortByLengthQuick(array));
+        logger.info("Length descending: {}", sortServiceImpl.sortByLengthDescending(array));
 
         logger.info("--- Alphabetical Sorting ---");
-        logger.info("Alphabetical sort: {}", sortService.sortAlphabetically(array));
+        logger.info("Alphabetical sort: {}", sortServiceImpl.sortAlphabetically(array));
 
         logger.info("--- Performance Comparison ---");
         long startTime, endTime;
 
         startTime = System.currentTimeMillis();
-        StringArray bubbleSorted = sortService.sortByLengthBubble(array);
+        StringArrayImpl bubbleSorted = sortServiceImpl.sortByLengthBubble(array);
         endTime = System.currentTimeMillis();
         logger.debug("Bubble sort completed in {} ms", endTime - startTime);
 
         startTime = System.currentTimeMillis();
-        StringArray quickSorted = sortService.sortByLengthQuick(array);
+        StringArrayImpl quickSorted = sortServiceImpl.sortByLengthQuick(array);
         endTime = System.currentTimeMillis();
         logger.debug("Quick sort completed in {} ms", endTime - startTime);
 
@@ -218,3 +281,4 @@ public class App {
                 Arrays.equals(bubbleSorted.getArray(), quickSorted.getArray()));
     }
 }
+

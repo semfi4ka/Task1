@@ -3,39 +3,11 @@ package main.java.com.filippovich.arrayapp.validation;
 import main.java.com.filippovich.arrayapp.exception.InvalidArrayException;
 import main.java.com.filippovich.arrayapp.exception.InvalidDataException;
 
-public final class ArrayValidator {
-    private ArrayValidator() {}
+public interface ArrayValidator {
+    String WORD_REGEX = "[a-zA-Zа-яА-Я]+";
+    String DELIMITER_REGEX = "[,\\s;\\-]+";
 
-    public static final String WORD_REGEX = "[a-zA-Zа-яА-Я]+";
-    public static final String DELIMITER_REGEX = "[,\\s;\\-]+";
-
-    public static void validateArray(String[] array) throws InvalidArrayException {
-        if (array == null) {
-            throw new InvalidArrayException("Array cannot be null");
-        }
-    }
-
-    public static boolean isValidWordString(String str) {
-        return str != null && str.matches(WORD_REGEX);
-    }
-
-    public static void validateLineFormat(String line) throws InvalidDataException {
-        if (line == null || line.trim().isEmpty()) {
-            throw new InvalidDataException("Line is empty or null");
-        }
-
-        String[] parts = line.split(DELIMITER_REGEX);
-        boolean hasValidWord = false;
-
-        for (String part : parts) {
-            if (!part.trim().isEmpty() && isValidWordString(part.trim())) {
-                hasValidWord = true;
-                break;
-            }
-        }
-
-        if (!hasValidWord) {
-            throw new InvalidDataException("Line contains no valid words: " + line);
-        }
-    }
+    void validateArray(String[] array) throws InvalidArrayException;
+    boolean isValidWordString(String str);
+    void validateLineFormat(String line) throws InvalidDataException;
 }
