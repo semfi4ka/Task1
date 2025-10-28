@@ -14,7 +14,7 @@ import main.java.com.filippovich.arrayapp.entity.impl.ArrayFactory;
 
 import main.java.com.filippovich.arrayapp.repository.*;
 import main.java.com.filippovich.arrayapp.repository.specification.*;
-import main.java.com.filippovich.arrayapp.warehouse.Warehouse;
+import main.java.com.filippovich.arrayapp.warehouse.impl.Warehouse;
 
 
 import main.java.com.filippovich.arrayapp.service.ArrayService;

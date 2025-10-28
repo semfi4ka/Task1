@@ -1,4 +1,4 @@
-package main.java.com.filippovich.arrayapp.warehouse;
+package main.java.com.filippovich.arrayapp.warehouse.impl;
 
 import main.java.com.filippovich.arrayapp.entity.StringArray;
 import main.java.com.filippovich.arrayapp.observer.Observer;
@@ -17,7 +17,7 @@ public class Warehouse implements Observer {
 
     private static Warehouse instance;
 
-    private final Map<UUID, ArrayStatistics> statisticsMap = new HashMap<>();
+    private final Map<UUID, ArrayStatisticsImpl> statisticsMap = new HashMap<>();
 
     private Warehouse() {
         logger.info("Warehouse Singleton created.");
@@ -52,7 +52,7 @@ public class Warehouse implements Observer {
 
     private void calculateAndStore(StringArray array) {
         if (array.isEmpty()) {
-            ArrayStatistics stats = new ArrayStatistics(0, 0, 0, 0, 0);
+            ArrayStatisticsImpl stats = new ArrayStatisticsImpl(0, 0, 0, 0, 0);
             statisticsMap.put(array.getId(), stats);
             logger.debug("Stored empty stats for array ID: {}", array.getId());
             return;
@@ -66,12 +66,12 @@ public class Warehouse implements Observer {
         int minLength = Arrays.stream(strings).mapToInt(String::length).min().orElse(0);
         int count = strings.length;
 
-        ArrayStatistics stats = new ArrayStatistics(avgLength, totalChars, maxLength, minLength, count);
+        ArrayStatisticsImpl stats = new ArrayStatisticsImpl(avgLength, totalChars, maxLength, minLength, count);
         statisticsMap.put(array.getId(), stats);
         logger.debug("Calculated and stored stats for array ID {}: {}", array.getId(), stats);
     }
 
-    public Optional<ArrayStatistics> getStatistics(UUID arrayId) {
+    public Optional<ArrayStatisticsImpl> getStatistics(UUID arrayId) {
         return Optional.ofNullable(statisticsMap.get(arrayId));
     }
 }
